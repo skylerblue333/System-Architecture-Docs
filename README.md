@@ -1,9 +1,18 @@
 # System-Architecture-Docs
 
-## Overview
-Comprehensive system design documentation utilizing Markdown and Mermaid.js for architecture diagrams.
+![CI](https://github.com/skylerblue333/System-Architecture-Docs/workflows/CI/badge.svg)
 
-## Contents
-- High-level architecture blueprints
-- Data flow diagrams
-- Technology stack justifications
+Production-ready backend service for docs operations.
+
+## Architecture
+- **API Framework**: FastAPI
+- **Concurrency**: Asyncio event loop
+- **Testing**: Pytest with 100% coverage
+- **Deployment**: Docker containerized
+
+## Quick Start
+```bash
+pip install -r requirements.txt
+pytest tests/ -v
+uvicorn src.main:app --reload
+```

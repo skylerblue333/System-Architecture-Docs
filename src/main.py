@@ -1,23 +1,32 @@
-import asyncio
+"""
+System-Architecture-Docs: Service registry and architecture documentation API
+"""
 import time
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI(title="System-Architecture-Docs")
+app = FastAPI(title="System-Architecture-Docs", version="3.0.0")
 
-class TaskPayload(BaseModel):
-    data: dict
+from typing import List
 
-async def process_data_background(payload: dict):
-    # Simulate heavy processing
-    await asyncio.sleep(1)
-    print(f"Processed: {payload}")
+class ServiceDoc(BaseModel):
+    name: str
+    language: str
+    description: str
+    endpoints: List[str]
 
-@app.post("/api/v1/process")
-async def process_endpoint(payload: TaskPayload, background_tasks: BackgroundTasks):
-    background_tasks.add_task(process_data_background, payload.data)
-    return {"status": "accepted", "processing_time_ms": int(time.time() * 1000)}
+registry = {}
+
+@app.post("/api/v1/services")
+def register_service(doc: ServiceDoc):
+    registry[doc.name] = doc.dict()
+    return {"status": "registered", "service": doc.name, "total_services": len(registry)}
+
+@app.get("/api/v1/services")
+def list_services():
+    return {"services": list(registry.values()), "total": len(registry)}
+
 
 @app.get("/health")
 def health():
-    return {"status": "healthy", "version": "3.0.0"}
+    return {"status": "healthy", "service": "System-Architecture-Docs", "timestamp": int(time.time())}

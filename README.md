@@ -1,44 +1,28 @@
-<!-- PORTFOLIO PROJECT PROFILE: maintained by the repository owner -->
+# SKYCOIN4444 System Architecture Docs
 
-## Project profile and code-audit snapshot
+A version-controlled architecture-reference package for the SKYCOIN4444 engineering portfolio. This repository documents integration principles, trust boundaries, operational evidence expectations, and architecture-decision practices; it is not a runtime service.
 
-**What this is:** **System-Architecture-Docs** is a public repository described as: “Comprehensive design documents for enterprise systems. #SkyCoin4444 #AI #Blockchain #DevOps #Innovation” Its dominant language signals are **Python (4 files)**.
+## Contents
 
-**Why it has value:** Its value is best understood through the implementation evidence currently present in the repository: **18 tracked files** were observed in the shallow audit, with the source structure and existing documentation providing the project’s specific context. This README does not treat a prototype, experiment, or archive as a production system without supporting evidence.
+- [`docs/architecture.md`](docs/architecture.md) — reference system context, zones, design principles, integration checklist, and explicit non-claims.
+- [`docs/adr-template.md`](docs/adr-template.md) — reusable architecture decision record template.
+- [`scripts/validate_docs.py`](scripts/validate_docs.py) — dependency-free structural/local-link validator used by CI.
 
-**Implementation evidence:** 2 test-related file(s) detected; 2 dependency or package manifest(s) detected; 2 build/CI/infrastructure signal(s) detected; and 3 documentation or governance file(s) detected. Test filenames observed include `tests/__init__.py`, `tests/test_main.py`. Dependency or package files include `package.json`, `requirements.txt`. Build, CI, or infrastructure signals include `Dockerfile`, `.github/workflows/ci.yml`.
+## Validation
 
-**Current status:** The repository is tracked on the `main` branch. The existing source tree, configuration, tests, workflows, and documentation remain authoritative for supported behavior and maturity. A code audit is not a production-readiness certification, and the presence of a test or workflow file does not establish that all checks pass.
+```bash
+python scripts/validate_docs.py
+python -m py_compile scripts/validate_docs.py
+```
 
-**Relationship to the wider portfolio:** This repository is one focused component of the broader Skyler Blue Spillers portfolio across AI, software engineering, cloud and DevOps, cybersecurity, blockchain, finance, education, social systems, and creative work. It may provide a service boundary, implementation pattern, experiment, archive, or reusable idea for related repositories. Treat repositories as technical dependencies only where documented interfaces and verified project requirements support that relationship.
+The CI gate also checks the Markdown set for several obvious secret/private-key patterns. That lightweight check is not a substitute for a dedicated secret scanner or security review.
 
-**Quality and security note:** No obvious secret-like pattern was detected by the limited static scan; this is not a substitute for a security audit. No TODO/FIXME marker was detected in the scanned text files.
+## Documentation policy
 
----
+Architecture statements should separate implemented/verified facts from intended design. Repository names, infrastructure configuration, diagrams, or roadmap language alone do not prove a production deployment, security certification, capacity target, availability objective, backup/restore result, or external-provider integration.
 
-# System Architecture Docs
+When documenting an integrated component, record its repository and exact version, contract, dependency and trust assumptions, persistence model, resource limits, failure behavior, observability, security-sensitive data, test/release evidence, and upgrade/rollback approach.
 
-![GitHub stars](https://img.shields.io/github/stars/skylerblue333/System-Architecture-Docs?style=flat-square)
-![GitHub license](https://img.shields.io/github/license/skylerblue333/System-Architecture-Docs?style=flat-square)
+## Product status
 
-## 🌟 Overview
-**System-Architecture-Docs** is a professional-grade project within the **SkyCoin4444** ecosystem. It focuses on delivering high-value solutions in the domain of **Python**.
-
-## 🚀 Key Features
-- **Scalable Architecture**: Designed for enterprise-level growth and performance.
-- **Modern Standards**: Implements best practices for clean code and maintainability.
-- **Robust Integration**: Built to work seamlessly within modern cloud-native environments.
-
-## 🛠️ Technology Stack
-- **Primary Domain**: Python
-- **Ecosystem**: SkyCoin4444 Digital Platform
-
-## 📂 Structure
-The project is organized into a modular structure to ensure clarity and ease of development.
-
-## 👨‍💻 Author
-**Skyler Blue Spillers**
-*Professional Chess Player & Software Engineer*
-
----
-*Powered by SkyCoin4444*
+Engineering-beta documentation package. It provides reusable design/reference material and CI validation only. It does not centrally enforce architecture policy, deploy services, provision infrastructure, introspect live systems, generate compliance evidence, or certify the wider portfolio as production-ready.

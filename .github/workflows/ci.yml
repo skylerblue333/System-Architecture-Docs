@@ -1,12 +1,27 @@
-name: CI
-on: [push, pull_request]
+name: architecture-docs-ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  validate:
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - run: pip install -r requirements.txt
-      - run: pytest tests/ -v
+          python-version: '3.12'
+      - name: Validate architecture package
+        run: python scripts/validate_docs.py
+      - name: Compile validator
+        run: python -m py_compile scripts/validate_docs.py
+      - name: Reject obvious secret material in docs
+        run: |
+          if grep -RIE --include='*.md' '(BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,})' README.md docs; then
+            echo 'secret-like material found in documentation' >&2
+            exit 1
+          fi
